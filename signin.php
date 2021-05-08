@@ -48,7 +48,7 @@
             echo '
             <div style="text-align:left;"><a class="button" href="./signup.php">Sign Up</a></div>
             <h1>Sign In</h1>
-            <h3>Sign in to your DropAuth account to report road hazards!</h3>
+            <h3>Sign in to your DropAuth account!</h3>
             <form method="POST">
                 <input placeholder="Username" name="username"><br><br>
                 <input placeholder="Password" name="password" type="password"><br><br>

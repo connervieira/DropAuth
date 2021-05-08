@@ -1,5 +1,6 @@
 # DropAuth
 
+Version 1.0
 A drag and drop authentication system for PHP.
 
 
