@@ -46,6 +46,7 @@
 
         } else {
             echo '
+            <div style="text-align:left;"><a class="button" href="./signup.php">Sign Up</a></div>
             <h1>Sign In</h1>
             <h3>Sign in to your DropAuth account to report road hazards!</h3>
             <form method="POST">
