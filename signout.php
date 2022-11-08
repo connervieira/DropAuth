@@ -20,7 +20,8 @@
         session_destroy(); // Destroy the session.
         ?>
         <h1>Sign Out</h1>
-        <h3>You have signed out of your DropAuth account!</h3>
+        <h3>You've been signed out of your DropAuth account</h3>
+        <br><hr><br><br>
         <a class="button" href="./signin.php">Sign In</a>
         <a class="button" href="./index.php">Main Page</a>
     </body>

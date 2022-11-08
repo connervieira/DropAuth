@@ -19,10 +19,19 @@ DropAuth is completely open source and freely auditable. It's also GPLv3 license
 
 DropAuth never stores password in plain text, ensuring that even if the authentication database is compromised that user logins are still secure.
 
-### Privacy Respecting
+### Private
 
-DropAuth doesn't depend on JavaScript, advertisements, tracking, or other features that could potentially violate the privacy of users. All of the pages are static, and there are no analytics systems built in.
+DropAuth never stores password in plain text, ensuring that all user information is safe, even if the database is compromised.
 
 ### Self Hosted
 
 DropAuth doesn't require any external services to function. It's entirely self hosted on the server that you want to use it on, which ensures fast loading times, better security, and improved privacy.
+
+### Simple
+
+DropAuth is simple to install, modify, and use, making it the perfect extensible platform for building your own integrated authentication system.
+
+
+### Fast
+
+Due in large part to it's simplicity, DropAuth is blazing fast and lightweight, making it perfect for a wide variety of use cases.
