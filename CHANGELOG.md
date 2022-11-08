@@ -13,6 +13,8 @@
 
 ### Dependability Update
 
+November 8th, 2022
+
 - Improved security
     - There is now a maximum length limit on passwords and usernames.
     - Usernames are now sanitized, and only alphanumeric characters are permitted.
