@@ -25,8 +25,13 @@
             $account_database = load_database("./accountDatabase.txt"); // Load the account database using the function defined in utils.php
 
             session_start(); // Start a PHP session.
-            if (isset($_SESSION['loggedin'])) { // Check to see if the user is already signed in.
-                echo "<p class='error'>You're already signed in to DropAuth as " . $_SESSION["username"] . "!</p>";
+            if ($_SESSION['loggedin'] == 1) { // Check to see if the user is already signed in.
+                if ($_SESSION['authid'] == "dropauth") { // Check to see if the user is signed in via DropAuth.
+                    echo "<p class='error'>You're already signed in to DropAuth as " . $_SESSION["username"] . "!</p>";
+                } else {
+                    echo "<p class='error'>It appears that you're already signed in to an account, but not through DropAuth. It's possible another program's authentication system is conflicting with DropAuth. Please try signing out of any other accounts on this website before continuing.</p>";
+                }
+            }
 
             } else if (variable_exists($username)) { // Check to see if the user has entered a username.
                 if (strlen($username) <= 30) { // Check to make sure the user's selected username is under 30 characters.

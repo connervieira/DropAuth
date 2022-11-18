@@ -29,3 +29,10 @@ November 8th, 2022
 - Improved reliability
     - Page loading now terminates if a login redirect is triggered to prevent unauthorized access to pages.
     - Login redirects now use an aboslute path to make automatic redirecting more consistent.
+
+
+## Version 2.1
+
+*Release date to be determined*
+
+- Added an authentication ID to the session so other programs can identify the source of authentication.
