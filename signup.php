@@ -31,7 +31,6 @@
                 } else {
                     echo "<p class='error'>It appears that you're already signed in to an account, but not through DropAuth. It's possible another program's authentication system is conflicting with DropAuth. Please try signing out of any other accounts on this website before continuing.</p>";
                 }
-            }
 
             } else if (variable_exists($username)) { // Check to see if the user has entered a username.
                 if (strlen($username) <= 30) { // Check to make sure the user's selected username is under 30 characters.
