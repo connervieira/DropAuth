@@ -30,10 +30,10 @@ include "./utils.php";
                 }
 
             } else if (variable_exists($username)) { // Check to see if the user has entered a username.
-                if (strlen($username) <= 30) { // Check to make sure the user's selected username is under 30 characters.
+                if (strlen($username) <= $config["limits"]["length"]["username"]["max"] and strlen($username) >= $config["limits"]["length"]["username"]["min"]) { // Check to make sure the user's selected username is within length requirements.
                     if ($username == preg_replace("/[^a-zA-Z0-9]/", '', $username)) { // Sanitize the username input.
                         if (variable_exists($password1)) { // Check to see if the user has enter a password.
-                            if (strlen($password1) <= 500) { // Check to make sure the user's password is under 500 characters.
+                            if (strlen($password1) <= $config["limits"]["length"]["password"]["max"] and strlen($password1) >= $config["limits"]["length"]["password"]["min"]) { // Check to make sure the user's selected password is within length requirements.
                                 if (variable_exists($password2)) { // Check to see if the user has filled out the password confirmation.
                                     if ($password1 == $password2) { // Check to see if the password and the password confirmation match.
                                         if (!isset($account_database[$username])) { // Make sure the selected username doesn't already exist in the account database.
@@ -74,7 +74,7 @@ include "./utils.php";
                                     <a class='button' href='./signup.php'>Back</a>";
                                 }
                             } else {
-                                echo "<p class='error'>The password you've entered is too long. Please ensure your password is 500 characters or less.</p>
+                                echo "<p class='error'>The password doesn't meet the length requirements. Your password needs to be between " . $config["limits"]["length"]["password"]["min"] . " and " . $config["limits"]["length"]["password"]["max"] . " characters in length.</p>
                                 <br>
                                 <a class='button' href='./signup.php'>Back</a>";
                             }
@@ -89,7 +89,7 @@ include "./utils.php";
                         <a class='button' href='./signup.php'>Back</a>";
                     }
                 } else {
-                    echo "<p class='error'>The username you've entered is too long. Please ensure your username is 30 characters or less.</p>
+                    echo "<p class='error'>The username you've entered doesn't meet the length requirements. Your username needs to be between " . $config["limits"]["length"]["username"]["min"] . " and " . $config["limits"]["length"]["username"]["max"] . " characters in length.</p>
                     <br>
                     <a class='button' href='./signup.php'>Back</a>";
                 }

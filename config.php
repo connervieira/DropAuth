@@ -20,8 +20,9 @@ if (file_exists($config_database_name) == false) { // Check to see if the databa
     $config["limits"]["length"]["username"]["max"] = 30;
     $config["limits"]["length"]["username"]["min"] = 4;
     $config["limits"]["length"]["password"]["max"] = 500;
-    $config["limits"]["length"]["password"]["min"] = 4;
-    $config["admin_username"] = "admin";
+    $config["limits"]["length"]["password"]["min"] = 8;
+    $config["allow_signups"] = true;
+    $config["admin_users"] = array("admin");
     $config["database_location"] = "./dropauth_account_database.txt";
 
     fwrite($configuration_database_file, serialize($config)); // Set the contents of the database file to the placeholder configuration.

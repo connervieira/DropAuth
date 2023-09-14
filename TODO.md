@@ -9,7 +9,7 @@ This is an informal to-do list for DropAuth. It is not a comprehensive changelog
     - [ ] Create a configuration back-end.
         - [X] Add a configuration handling script.
         - [ ] Add the ability for the configuration to be saved to a file.
-    - [ ] Validate the usernames and passwords are within the configured length requirements.
+    - [X] Validate the usernames and passwords are within the configured length requirements.
     - [ ] Allow admins to disable new account creation.
     - [ ] Allow admins to delete accounts.
     - [ ] Allow admins to change the password of accounts.

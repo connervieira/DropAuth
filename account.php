@@ -19,6 +19,12 @@ include "./config.php";
             <br><hr><br><br>
             <a class="button" href="./signout.php">Sign Out</a>
             <a class="button" href="./changepassword.php">Change Password</a>
+
+            <?php
+            if (in_array($username, $config["admin_users"])) { // Check to see if the current user is an administrator.
+                echo "<br><br><br><a class=\"button\" href=\"./configure.php\">Configure</a>";
+            }
+            ?>
         </main>
     </body>
 </html>
