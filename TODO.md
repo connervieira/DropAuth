@@ -6,10 +6,10 @@ This is an informal to-do list for DropAuth. It is not a comprehensive changelog
     - [ ] Add the ability to register services with DropAuth.
     - [ ] Add the ability for services to save information with DropAuth.
 - [ ] Add configuration system that allows administrators to manage DropAuth.
-    - [ ] Create a configuration back-end.
+    - [X] Create a configuration back-end.
         - [X] Add a configuration handling script.
-        - [ ] Add the ability for the configuration to be saved to a file.
+        - [X] Add file based configuration saving.
     - [X] Validate the usernames and passwords are within the configured length requirements.
-    - [ ] Allow admins to disable new account creation.
+    - [X] Allow admins to disable new account creation.
     - [ ] Allow admins to delete accounts.
     - [ ] Allow admins to change the password of accounts.

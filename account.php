@@ -22,7 +22,9 @@ include "./config.php";
 
             <?php
             if (in_array($username, $config["admin_users"])) { // Check to see if the current user is an administrator.
-                echo "<br><br><br><a class=\"button\" href=\"./configure.php\">Configure</a>";
+                echo "<br><br><br>";
+                echo "<a class=\"button\" href=\"./configure.php\">Configure</a>";
+                echo "<a class=\"button\" href=\"./services.php\">Services</a>";
             }
             ?>
         </main>

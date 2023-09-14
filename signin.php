@@ -41,17 +41,22 @@ include "./utils.php";
                     }
                 } else {
                     echo "<p class='error'>The username you've entered doesn't seem to exists in the account database. Please make sure you've typed your username correctly. If you're trying to create a new account, please use the 'Sign Up' page.</p>
-                    <a class='button' href='./signin.php'>Back</a>
-                    <a class='button' href='./signup.php'>Sign Up</a>";
+                    <a class='button' href='./signin.php'>Back</a>";
+                    if ($config["allow_signups"] == true) { echo '<a class="button" href="./signup.php">Sign Up</a>'; // If sign-ups are enabled, then display the sign-up button as normal.
+                    } else { echo '<a class="disabledbutton" href="./signup.php">Sign Up</a>'; } // If sign-ups are disabled, then display a disabled version of the sign-up button.
                 }
             } else {
                 echo "<p class='error'>Please enter a password before attempting to sign into your account!</p>
                 <a class='button' href='./signin.php'>Back</a>";
             }
 
-        } else {
+        } else { // The user has not submitted the login form yet, so display the login page normally.
             echo '
-            <div style="text-align:left;"><a class="button" href="./signup.php">Sign Up</a></div>
+            <div style="text-align:left;">';
+            if ($config["allow_signups"] == true) { echo '<a class="button" href="./signup.php">Sign Up</a>'; // If sign-ups are enabled, then display the sign-up button as normal.
+            } else { echo '<a class="disabledbutton" href="./signup.php">Sign Up</a>'; } // If sign-ups are disabled, then display a disabled version of the sign-up button.
+            echo '</div>
+
             <main>
                 <h1>Sign In</h1>
                 <h3>Sign in to an existing ' . htmlspecialchars($config["branding"]["name"]) . ' account</h3>

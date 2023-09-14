@@ -12,7 +12,7 @@ function variable_exists($variable_to_check) {
 
 function load_account_database() {
     global $config;
-    $database_to_load = $config["database_location"];
+    $database_to_load = $config["databases"]["account"];
 
     if (file_exists($database_to_load)) { // Check if the selected database already exists
         return unserialize(file_get_contents($database_to_load)); // Load the selected database file from the disk.

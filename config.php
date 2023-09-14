@@ -1,8 +1,8 @@
 <?php
-$config_database_name = "./dropauth_config.txt"; // This specifies where the configuration file will be stored.
+$config_database_name = "./databases/config.txt"; // This specifies where the configuration file will be stored.
 
-if (file_exists("../dropauth_config.txt")) {
-    $config_database_name = "../dropauth_config.txt";
+if (file_exists("../databases/config.txt")) {
+    $config_database_name = "../databases/config.txt";
 }
 
 if (is_writable(".") == false) {
@@ -23,7 +23,8 @@ if (file_exists($config_database_name) == false) { // Check to see if the databa
     $config["limits"]["length"]["password"]["min"] = 8;
     $config["allow_signups"] = true;
     $config["admin_users"] = array("admin");
-    $config["database_location"] = "./dropauth_account_database.txt";
+    $config["databases"]["account"] = "./databases/accounts.txt";
+    $config["databases"]["service"] = "./databases/services.txt";
 
     fwrite($configuration_database_file, serialize($config)); // Set the contents of the database file to the placeholder configuration.
     fclose($configuration_database_file); // Close the database file.

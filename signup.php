@@ -13,6 +13,11 @@ include "./utils.php";
     <body>
         <main>
             <?php
+            if ($config["allow_signups"] == false) { // Check to see if signups are disabled.
+                echo "<div style='text-align:left;'><a class='button' href='./signin.php'>Sign In</a></div>";
+                echo "<p class='error'>The administrator has disabled the creation of new accounts.</p>";
+                exit();
+            }
             // Get the variables from the submitted form.
             $username = $_POST["username"];
             $password1 = $_POST["password1"];
