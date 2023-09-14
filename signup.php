@@ -1,8 +1,11 @@
+<?php
+include "./config.php";
+include "./utils.php";
+?>
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
-        <title>DropAuth - Sign Up</title>
+        <title><?php echo htmlspecialchars($config["branding"]["name"]); ?> - Sign Up</title>
         <link href="./stylesheets/styles.css" rel="stylesheet">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,64 +13,78 @@
     <body>
         <main>
             <?php
-
             // Get the variables from the submitted form.
             $username = $_POST["username"];
             $password1 = $_POST["password1"];
             $password2 = $_POST["password2"];
 
 
-            // Sanitize inputs as needed.
-            $username = preg_replace("/[^a-zA-Z0-9]/", '', $username); // Sanitize the username input.
-
-            include("./utils.php"); // Include the script containing various useful utility functions.
-
-            $account_database = load_database("./accountDatabase.txt"); // Load the account database using the function defined in utils.php
+            $account_database = load_account_database(); // Load the account database using the function defined in utils.php
 
             session_start(); // Start a PHP session.
             if ($_SESSION['loggedin'] == 1) { // Check to see if the user is already signed in.
                 if ($_SESSION['authid'] == "dropauth") { // Check to see if the user is signed in via DropAuth.
-                    echo "<p class='error'>You're already signed in to DropAuth as " . $_SESSION["username"] . "!</p>";
+                    echo "<p class='error'>You're already signed in to " . htmlspecialchars($config["branding"]["name"]) . " as " . $_SESSION["username"] . "!</p>";
                 } else {
-                    echo "<p class='error'>It appears that you're already signed in to an account, but not through DropAuth. It's possible another program's authentication system is conflicting with DropAuth. Please try signing out of any other accounts on this website before continuing.</p>";
+                    echo "<p class='error'>It appears that you're already signed in to an account, but not through " . htmlspecialchars($config["branding"]["name"]) . ". It's possible another program's authentication system is conflicting with " . htmlspecialchars($config["branding"]["name"]) . ". Please try signing out of any other accounts on this website before continuing.</p>";
                 }
 
             } else if (variable_exists($username)) { // Check to see if the user has entered a username.
                 if (strlen($username) <= 30) { // Check to make sure the user's selected username is under 30 characters.
-                    if (variable_exists($password1)) { // Check to see if the user has enter a password.
-                        if (strlen($password1) <= 500) { // Check to make sure the user's password is under 500 characters.
-                            if (variable_exists($password2)) { // Check to see if the user has filled out the password confirmation.
-                                if ($password1 == $password2) { // Check to see if the password and the password confirmation match.
-                                    if (!isset($account_database[$username])) { // Make sure the selected username doesn't already exist in the account database.
-                                        $account_database[$username]["password"] = password_hash($password1, PASSWORD_DEFAULT); // Add the username and password to the database.
-                                        file_put_contents('./accountDatabase.txt', serialize($account_database)); // Save the database to the disk.
+                    if ($username == preg_replace("/[^a-zA-Z0-9]/", '', $username)) { // Sanitize the username input.
+                        if (variable_exists($password1)) { // Check to see if the user has enter a password.
+                            if (strlen($password1) <= 500) { // Check to make sure the user's password is under 500 characters.
+                                if (variable_exists($password2)) { // Check to see if the user has filled out the password confirmation.
+                                    if ($password1 == $password2) { // Check to see if the password and the password confirmation match.
+                                        if (!isset($account_database[$username])) { // Make sure the selected username doesn't already exist in the account database.
+                                            $account_database[$username]["password"] = password_hash($password1, PASSWORD_DEFAULT); // Add the username and password to the database.
+                                            $account_database[$username]["information"] = array(); // Add a placeholder for personal information.
+                                            $account_database[$username]["preferences"] = array(); // Add a placeholder for user preferences.
+                                            $account_database[$username]["diagnostic"] = array(); // Add an array for diagnostic information.
+                                            $account_database[$username]["diagnostic"]["time"]["signup"] = time();
+                                            $account_database[$username]["diagnostic"]["time"]["latest"] = time();
+                                            $account_database[$username]["diagnostic"]["ip"]["signup"] = get_client_ip();
+                                            $account_database[$username]["diagnostic"]["ip"]["latest"] = get_client_ip();
+                                            $account_database[$username]["diagnostic"]["client"]["platform"]["signup"] = get_client_platform();
+                                            $account_database[$username]["diagnostic"]["client"]["platform"]["latest"] = get_client_platform();
+                                            $account_database[$username]["diagnostic"]["client"]["browser"]["signup"] = get_client_browser();
+                                            $account_database[$username]["diagnostic"]["client"]["browser"]["latest"] = get_client_browser();
 
-                                        echo "<p class='success'>You've successfully created a DropAuth account! Please log in to continue.</p>
-                                        <br>
-                                        <a class='button' href='./signin.php'>Sign In</a>";
+                                            $account_database[$username]["2fa"] = array(); // Add a placeholder for two factor authentication information.
+                                            $account_database[$username]["services"] = array(); // Add a placeholder for services data.
+                                            save_account_database($account_database); // Save the database to disk using the function defined in utils.php.
+
+                                            echo "<p class='success'>You've successfully created a " . htmlspecialchars($config["branding"]["name"]) . " account! Please log in to continue.</p>
+                                            <br>
+                                            <a class='button' href='./signin.php'>Sign In</a>";
+                                        } else {
+                                            echo "<p class='error'>There is already an account with your desired username. Please choose a different username. If you are trying to sign in to an existing account, please use the 'Sign In' page.</p>
+                                            <br>
+                                            <a class='button' href='./signup.php'>Back</a>
+                                            <a class='button' href='./signin.php'>Sign In</a>";
+                                        }
                                     } else {
-                                        echo "<p class='error'>There is already an account with your desired username. Please choose a different username. If you are trying to sign in to an existing account, please use the 'Sign In' page.</p>
+                                        echo "<p class='error'>The password confirmation and password don't match. This means you've probably made a typo. Please make sure that your password and password confirmation match.</p>
                                         <br>
-                                        <a class='button' href='./signup.php'>Back</a>
-                                        <a class='button' href='./signin.php'>Sign In</a>";
+                                        <a class='button' href='./signup.php'>Back</a>";
                                     }
                                 } else {
-                                    echo "<p class='error'>The password confirmation and password don't match. This means you've probably made a typo. Please make sure that your password and password confirmation match.</p>
+                                    echo "<p class='error'>You've entered a username and password, but you didn't fill out the password confirmation box. Please repeat your password in the 'Password Confirmation' field to ensure you've typed it correctly.</p>
                                     <br>
                                     <a class='button' href='./signup.php'>Back</a>";
                                 }
                             } else {
-                                echo "<p class='error'>You've entered a username and password, but you didn't fill out the password confirmation box. Please repeat your password in the 'Password Confirmation' field to ensure you've typed it correctly.</p>
+                                echo "<p class='error'>The password you've entered is too long. Please ensure your password is 500 characters or less.</p>
                                 <br>
                                 <a class='button' href='./signup.php'>Back</a>";
                             }
                         } else {
-                            echo "<p class='error'>The password you've entered is too long. Please ensure your password is 500 characters or less.</p>
+                            echo "<p class='error'>You've entered a username but not a password! Please provide a password you'd like to use to log in to your " . htmlspecialchars($config["branding"]["name"]) . " account.</p>
                             <br>
                             <a class='button' href='./signup.php'>Back</a>";
                         }
                     } else {
-                        echo "<p class='error'>You've entered a username but not a password! Please provide a password you'd like to use to log in to your DropAuth account.</p>
+                        echo "<p class='error'>You chosen username has disallowed characters. Usernames can only contain letters and numbers.</p>
                         <br>
                         <a class='button' href='./signup.php'>Back</a>";
                     }
@@ -81,7 +98,7 @@
                 <div style="text-align:left;"><a class="button" href="./signin.php">Sign In</a></div>
                 <main>
                     <h1>Sign Up</h1>
-                    <h3>Sign up for a DropAuth account</h3>
+                    <h3>Sign up for a ' . htmlspecialchars($config["branding"]["name"]) . ' account</h3>
                     <br><hr><br><br>
                     <form method="POST">
                         <label for="username">Username: </label><input id="username" placeholder="Username" name="username"><br><br>

@@ -31,8 +31,10 @@ November 8th, 2022
     - Login redirects now use an aboslute path to make automatic redirecting more consistent.
 
 
-## Version 2.1
+## Version 3.0
 
 *Release date to be determined*
 
 - Added an authentication ID to the session so other programs can identify the source of authentication.
+- Added a configuration system.
+- Moved more logic to `utils.php` to reduce the risk of typos causing unexpected behavior.

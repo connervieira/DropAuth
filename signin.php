@@ -1,8 +1,11 @@
+<?php
+include "./config.php";
+include "./utils.php";
+?>
 <!DOCTYPE html>
-
 <html lang="en">
     <head>
-        <title>DropAuth - Sign In</title>
+        <title><?php echo htmlspecialchars($config["branding"]["name"]); ?> - Sign In</title>
         <link href="./stylesheets/styles.css" rel="stylesheet">
 
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,16 +15,14 @@
         $username = $_POST["username"]; // Get the username from the POST request (if it exists)
         $password = $_POST["password"]; // Get the password from the POST request (if it exists)
 
-        include("./utils.php"); // Include the script containing various useful utilities that may be needed.
-
-        $account_database = load_database("./accountDatabase.txt"); // Load the account database using the function defined in utils.php
+        $account_database = load_account_database(); // Load the account database using the function defined in utils.php
 
         session_start(); // Start a PHP session.
         if ($_SESSION['loggedin'] == 1) { // Check to see if the user is already signed in.
             if ($_SESSION['authid'] == "dropauth") {
-                echo "<p class='error'>You're already signed in to DropAuth as " . $_SESSION["username"] . "!</p>";
+                echo "<p class='error'>You're already signed in to " . htmlspecialchars($config["branding"]["name"]) . " as " . $_SESSION["username"] . "!</p>";
             } else {
-                echo "<p class='error'>It appears that you're already signed into an authentication system on this site, but it conflicts with DropAuth. Please sign out of any other accounts on this website and try again.</p>";
+                echo "<p class='error'>It appears that you're already signed into an authentication system on this site, but it conflicts with " . htmlspecialchars($config["branding"]["name"]) . ". Please sign out of any other accounts on this website and try again.</p>";
             }
         } else if (variable_exists($username)) { // Check to see if the user has entered a username to log in to.
             if (variable_exists($password)) { // Check to see if the user has entered a password.
@@ -31,7 +32,7 @@
                         $_SESSION['authid'] = "dropauth"; // Set the source of authentication in in the PHP session.
                         $_SESSION['loggedin'] = 1; // Set the type of account signed in in the PHP session.
                         $_SESSION['username'] = $username; // Set the current username in the PHP session.
-                        echo "<p class='success'>You've successfully signed into your DropAuth account!</p>
+                        echo "<p class='success'>You've successfully signed into your " . htmlspecialchars($config["branding"]["name"]) . " account!</p>
                         <br>
                         <a class='button' href='./account.php'>Continue To Account</a>";
                     } else {
@@ -53,7 +54,7 @@
             <div style="text-align:left;"><a class="button" href="./signup.php">Sign Up</a></div>
             <main>
                 <h1>Sign In</h1>
-                <h3>Sign in to an existing DropAuth account</h3>
+                <h3>Sign in to an existing ' . htmlspecialchars($config["branding"]["name"]) . ' account</h3>
                 <br><hr><br><br>
                 <form method="POST">
                     <input placeholder="Username" name="username"><br><br>

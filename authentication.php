@@ -1,4 +1,6 @@
 <?php
+include "./config.php";
+
 session_start(); // Start a PHP session.
 if ($_SESSION['authid'] == "dropauth") { // Check to see if the user is already signed in.
     $username = $_SESSION["username"];

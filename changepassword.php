@@ -1,12 +1,13 @@
 <?php
 $force_login_redirect = true; // If the user isn't signed in, redirect them to the login page.
 include("./authentication.php"); // Load the authentication system.
+include("./config.php"); // Load the authentication system.
 ?>
 <!DOCTYPE html>
 
 <html lang="en">
     <head>
-        <title>DropAuth - Change Password</title>
+        <title><?php echo htmlspecialchars($config["branding"]["name"]); ?> - Change Password</title>
         <link href="./stylesheets/styles.css" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
@@ -21,7 +22,7 @@ include("./authentication.php"); // Load the authentication system.
 
             include("./utils.php"); // Include the script containing various useful utility functions.
 
-            $account_database = load_database("./accountDatabase.txt"); // Load the account database using the function defined in utils.php
+            $account_database = load_account_database(); // Load the account database using the function defined in utils.php
 
             if (variable_exists($oldpassword)) { // Check to see if the user has entered their current password before attempting to change the password.
                 if (password_verify($oldpassword, $account_database[$username]["password"])) { // Verify that the password entered by the user matches the password on file in the account database.
@@ -31,11 +32,11 @@ include("./authentication.php"); // Load the authentication system.
                                 if ($password1 == $password2) { // Check to see if the password and the password confirmation match.
                                     if (isset($account_database[$username])) { // Make sure the selected username doesn't already exist in the account database.
                                         $account_database[$username]["password"] = password_hash($password1, PASSWORD_DEFAULT); // Change the user's password.
-                                        file_put_contents('./accountDatabase.txt', serialize($account_database)); // Save the database to the disk.
+                                        save_account_database($account_database);
                                         echo "<p class='success'>Your password has been successfully changed.</p><br>
                                         <a class='button' href='./account.php'>Back</a>";
                                     } else {
-                                        echo "<p class='error'>There is no account in the database with your username. This condition should never happen, and it's likely DropAuth was configured improperly. Please contact and administrator and make them aware of the issue.</p><br>
+                                        echo "<p class='error'>There is no account in the database with your username. This condition should never happen, and it's likely " . htmlspecialchars($config["branding"]["name"]) . " was configured improperly. Please contact and administrator and make them aware of the issue.</p><br>
                                         <a class='button' href='./account.php'>Back</a>";
                                     }
                                 } else {
@@ -63,7 +64,7 @@ include("./authentication.php"); // Load the authentication system.
                 <div style="text-align:left;"><a class="button" href="./account.php">Back</a></div>
                 <main>
                     <h1>Change Password</h1>
-                    <h3>Change your DropAuth password</h3>
+                    <h3>Change your ' . htmlspecialchars($config["branding"]["name"]) . ' password</h3>
                     <br><hr><br><br>
                     <form method="POST">
                         <label for="oldpassword">Current Password: </label><input id="oldpassword" placeholder="Current Password" name="oldpassword" type="password"><br><br>
