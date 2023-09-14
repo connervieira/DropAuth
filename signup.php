@@ -24,7 +24,7 @@ include "./utils.php";
             $password2 = $_POST["password2"];
 
 
-            $account_database = load_account_database(); // Load the account database using the function defined in utils.php
+            $account_database = load_database("account"); // Load the account database using the function defined in utils.php
 
             session_start(); // Start a PHP session.
             if ($_SESSION['loggedin'] == 1) { // Check to see if the user is already signed in.
@@ -57,7 +57,7 @@ include "./utils.php";
 
                                             $account_database[$username]["2fa"] = array(); // Add a placeholder for two factor authentication information.
                                             $account_database[$username]["services"] = array(); // Add a placeholder for services data.
-                                            save_account_database($account_database); // Save the database to disk using the function defined in utils.php.
+                                            save_database($account, $account_database); // Save the database to disk using the function defined in utils.php.
 
                                             echo "<p class='success'>You've successfully created a " . htmlspecialchars($config["branding"]["name"]) . " account! Please log in to continue.</p>
                                             <br>

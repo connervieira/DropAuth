@@ -10,9 +10,9 @@ function variable_exists($variable_to_check) {
     }  
 }
 
-function load_account_database() {
+function load_database($database_name) {
     global $config;
-    $database_to_load = $config["databases"]["account"];
+    $database_to_load = $config["databases"][$database_name];
 
     if (file_exists($database_to_load)) { // Check if the selected database already exists
         return unserialize(file_get_contents($database_to_load)); // Load the selected database file from the disk.
@@ -27,9 +27,9 @@ function load_account_database() {
     }
 }
 
-function save_account_database($save_data) {
+function save_database($database_name, $save_data) {
     global $config;
-    $save_path = $config["database_location"];
+    $save_path = $config["databases"][$database_name];
     file_put_contents($save_path, serialize($save_data)); // Save the database to the disk.
 }
 

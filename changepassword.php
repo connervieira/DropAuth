@@ -22,7 +22,7 @@ include("./config.php"); // Load the authentication system.
 
             include("./utils.php"); // Include the script containing various useful utility functions.
 
-            $account_database = load_account_database(); // Load the account database using the function defined in utils.php
+            $account_database = load_database("account"); // Load the account database using the function defined in utils.php
 
             if (variable_exists($oldpassword)) { // Check to see if the user has entered their current password before attempting to change the password.
                 if (password_verify($oldpassword, $account_database[$username]["password"])) { // Verify that the password entered by the user matches the password on file in the account database.
@@ -32,7 +32,7 @@ include("./config.php"); // Load the authentication system.
                                 if ($password1 == $password2) { // Check to see if the password and the password confirmation match.
                                     if (isset($account_database[$username])) { // Make sure the selected username doesn't already exist in the account database.
                                         $account_database[$username]["password"] = password_hash($password1, PASSWORD_DEFAULT); // Change the user's password.
-                                        save_account_database($account_database);
+                                        save_database("account", $account_database);
                                         echo "<p class='success'>Your password has been successfully changed.</p><br>
                                         <a class='button' href='./account.php'>Back</a>";
                                     } else {

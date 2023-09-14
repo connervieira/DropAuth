@@ -15,7 +15,7 @@ include "./utils.php";
         $username = $_POST["username"]; // Get the username from the POST request (if it exists)
         $password = $_POST["password"]; // Get the password from the POST request (if it exists)
 
-        $account_database = load_account_database(); // Load the account database using the function defined in utils.php
+        $account_database = load_database("account"); // Load the account database using the function defined in utils.php
 
         session_start(); // Start a PHP session.
         if ($_SESSION['loggedin'] == 1) { // Check to see if the user is already signed in.
