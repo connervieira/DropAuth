@@ -7,12 +7,18 @@
 
 To implement DropAuth into your web service, simply follow these steps.
 
-1. Download DropAuth from the V0LT website, or another source.
-2. Copy the DropAuth folder to the root of your webserver.
+1. Install Apache if you haven't already.
+    - `sudo apt install apache2`
+2. Install PHP if you haven't already.
+    - `sudo apt install php8.1`
+3. Make sure the PHP Apache module is enabled.
+    - `sudo a2enmod php8.1`
+4. Download DropAuth from the V0LT website, or another source.
+5. Copy the DropAuth folder to the root of your webserver.
     - Example: `cp dropauth/ /var/www/html/`
-3. Ensure the DropAuth folder is writable to PHP.
+6. Ensure the DropAuth folder is writable to PHP.
     - Example: `chmod 777 /var/www/html/dropauth`
-4. Include `authentication.php` on all pages where you want users to have to sign in.
+7. Include `authentication.php` on all pages where you want users to have to sign in.
     - Example: `<?php $force_login_redirect = true; include("./dropauth/authentication.php"); ?>`
 
 ### Integration
