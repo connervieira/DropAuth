@@ -41,7 +41,7 @@ include "./utils.php";
                     }
                 } else {
                     echo "<p class='error'>The username you've entered doesn't seem to exists in the account database. Please make sure you've typed your username correctly. If you're trying to create a new account, please use the 'Sign Up' page.</p>
-                    <a class='button' href='./signin.php'>Back</a>";
+                    <a class='button' href='./signin.php'>Back</a> ";
                     if ($config["allow_signups"] == true) { echo '<a class="button" href="./signup.php">Sign Up</a>'; // If sign-ups are enabled, then display the sign-up button as normal.
                     } else { echo '<a class="disabledbutton" href="./signup.php">Sign Up</a>'; } // If sign-ups are disabled, then display a disabled version of the sign-up button.
                 }

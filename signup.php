@@ -57,7 +57,7 @@ include "./utils.php";
 
                                             $account_database[$username]["2fa"] = array(); // Add a placeholder for two factor authentication information.
                                             $account_database[$username]["services"] = array(); // Add a placeholder for services data.
-                                            save_database($account, $account_database); // Save the database to disk using the function defined in utils.php.
+                                            save_database("account", $account_database); // Save the database to disk using the function defined in utils.php.
 
                                             echo "<p class='success'>You've successfully created a " . htmlspecialchars($config["branding"]["name"]) . " account! Please log in to continue.</p>
                                             <br>
