@@ -24,20 +24,16 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
 
 
 
-            if (variable_exists($_POST["service_id"])) { // Check to see if the configuration form was submitted.
+            if ($_POST["register"] == "Submit") { // Check to see if the registration form was submitted.
                 echo "<div style=\"text-align:left;\"><a class=\"button\" href=\"./services.php\">Back</a></div>";
 
                 // Collect all inputs.
                 $service_id = $_POST["service_id"];
-                $service_key = $_POST["service_key"];
                 $service_name = $_POST["service_name"];
 
                 // Validate and sanitize all inputs.
                 if ($service_id !== preg_replace("/[^a-zA-Z0-9_\-]/", '', $service_id)) {
                     echo "<p class=\"error\">The Service ID can only contain numbers, letters, underscores, and hyphens.</p>"; exit();
-                }
-                if ($service_key !== preg_replace("/[^a-zA-Z0-9]/", '', $service_key)) {
-                    echo "<p class=\"error\">The Service Key can only contain numbers and letters.</p>"; exit();
                 }
                 if ($service_name !== preg_replace("/[^a-zA-Z0-9_\-\ ]/", '', $service_name)) {
                     echo "<p class=\"error\">The Service Name can only contain numbers, letters, underscores, hyphens, and spaces.</p>"; exit();
@@ -45,13 +41,25 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
 
                 // Add the service to the database.
                 $service_database[$service_id] = array();
-                $service_database[$_POST["service_id"]]["authentication"]["key"] = $_POST["service_key"];
-                $service_database[$_POST["service_id"]]["info"]["name"] = $_POST["service_name"];
-                $service_database[$_POST["service_id"]]["info"]["registered"]["user"] = $username;
-                $service_database[$_POST["service_id"]]["info"]["registered"]["time"] = time();
+                $service_database[$_POST["service_id"]]["info"]["name"] = $_POST["service_name"]; // Record the name of this service, as set by the user.
+                $service_database[$_POST["service_id"]]["info"]["registered"]["user"] = $username; // Record the username of the user who registered this service.
+                $service_database[$_POST["service_id"]]["info"]["registered"]["time"] = time(); // Record the time that this service was registered.
 
                 // Save the updated service database to disk.
                 save_database("service", $service_database);
+                echo "<p>Successfully registered service.</p>";
+            } else if ($_POST["revoke"] == "Submit") { // Check to see if the revokation form was submitted.
+                echo "<div style=\"text-align:left;\"><a class=\"button\" href=\"./services.php\">Back</a></div>";
+
+                $service_id = $_POST["service_id"];
+
+                if (in_array($service_id , array_keys($service_database))) { // Check to make sure the specified service ID actually exists in the database.
+                    unset($service_database[$service_id]); // Remove the specified service ID from the service database.
+                    save_database("service", $service_database); // Save the modified service database to disk.
+                    echo "<p>Successfully revoked service.</p>";
+                } else { // Otherwise, the specified service ID does not exist in the database.
+                    echo "<p class=\"error\">The specified service ID does not exist in the database.</p>";
+                }
             } else {
                 echo '
                 <div style="text-align:left;"><a class="button" href="./account.php">Back</a></div>
@@ -61,23 +69,26 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
                     <br><br><hr><br>
                     <h2>Register</h2>
                     <form method="POST">
-                        <label for="service_id">Service ID: </label><input placeholder="service_identifier" id="service_id" type="text" name="service_id"><br><br>
-                        <label for="service_key">Service Key: </label><input placeholder="abc12345678" id="service_key" type="text" name="service_key" value="' . bin2hex(random_bytes(8)) . '"><br><br>
+                        <label for="service_id">Service ID: </label><input placeholder="service_identifier" id="service_id" type="text" name="service_id" value="' . $_GET["service_id_autofill"] . '"><br><br>
                         <label for="service_name">Service Name: </label><input placeholder="Friendly Name" id="service_name" type="text" name="service_name"><br><br>
-                        <input class="button" type="submit">
+                        <input class="button" name="register" id="register" value="Submit" type="submit">
                     </form>
 
                     <br><br><hr><br>
                     <h2>Revoke</h2>
                     <form method="POST">
-                        <label for="service_id">Service ID: </label><input placeholder="service_identifier" id="service_id" type="text" name="service_id" value="' . $_GET["revoke_autofill"] . '"><br><br>
-                        <input class="button" type="submit">
+                        <label for="service_id">Service ID: </label><input placeholder="service_identifier" id="service_id" type="text" name="service_id" value="' . $_GET["service_id_autofill"] . '"><br><br>
+                        <input class="button" name="revoke" id="revoke" value="Submit" type="submit">
                     </form>
 
                     <br><br><hr><br>
                     <h2>View</h2>
                     ';
-                    // TODO: Display existing registered services.
+                foreach (array_keys($service_database) as $service) {
+                    echo "<div class=\"box\">";
+                    echo "<a href=\"?service_id_autofill=" . $service . "\"><h3>" . $service . " - " . $service_database[$service]["info"]["name"] . "</h3></a>";
+                    echo "</div>";
+                }
                 echo '
                 </main>
                 ';

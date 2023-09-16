@@ -3,8 +3,13 @@
 This is an informal to-do list for DropAuth. It is not a comprehensive changelog, nor is it an official declaration of upcoming features.
 
 - [ ] Add the ability to store information for services directly in the DropAuth account data file.
-    - [ ] Add the ability to register services with DropAuth.
-    - [ ] Add the ability for services to save information with DropAuth.
+    - [X] Add service management.
+        - [X] Add the ability to register services with DropAuth.
+        - [X] Add the ability to revoke services with DropAuth.
+        - [X] Add the ability to view services that are registered with DropAuth.
+    - [ ] Allow service to interact with DropAuth.
+        - [ ] Add the ability for registered services to save information with DropAuth.
+        - [ ] Add the ability for registered services to read information they have stored in DropAuth.
 - [ ] Add configuration system that allows administrators to manage DropAuth.
     - [X] Create a configuration back-end.
         - [X] Add a configuration handling script.

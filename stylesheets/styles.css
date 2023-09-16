@@ -16,6 +16,12 @@ i {
 }
 
 
+.box {
+    background:#000000;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+}
 .button {
     background: #666666;
     padding: 10px;
