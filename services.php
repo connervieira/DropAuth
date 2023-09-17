@@ -44,6 +44,7 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
                 $service_database[$_POST["service_id"]]["info"]["name"] = $_POST["service_name"]; // Record the name of this service, as set by the user.
                 $service_database[$_POST["service_id"]]["info"]["registered"]["user"] = $username; // Record the username of the user who registered this service.
                 $service_database[$_POST["service_id"]]["info"]["registered"]["time"] = time(); // Record the time that this service was registered.
+                $service_database[$_POST["service_id"]]["data"]["main"]["active"] = array(); // Add a placeholder where this service will store it's data.
 
                 // Save the updated service database to disk.
                 save_database("service", $service_database);
