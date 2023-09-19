@@ -1,5 +1,6 @@
 <?php
-include "./config.php";
+include (dirname(__FILE__) . "/config.php");
+
 global $config;
 
 function variable_exists($variable_to_check) {
