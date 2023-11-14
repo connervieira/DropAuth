@@ -1,8 +1,8 @@
 <?php
 $force_login_redirect = true; // If the user isn't signed in, redirect them to the login page.
 include("./authentication.php"); // Load the authentication system.
-include "./config.php";
-include "./utils.php";
+include (dirname(__FILE__) . "/config.php");
+include (dirname(__FILE__) . "/utils.php");
 
 if (!in_array($username, $config["admin_users"])) { // Check to see if the current user is not an administrator.
     echo "<p>This tool is only available to administrators.</p>";
@@ -21,7 +21,6 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
         <main>
             <?php
             $service_database = load_database("service"); // Load the services database from disk.
-
 
 
             if ($_POST["register"] == "Submit") { // Check to see if the registration form was submitted.

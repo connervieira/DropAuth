@@ -47,7 +47,8 @@ To integrate an external service with DropAuth, follow these steps.
 4. Press "Submit" to register the service.
 5. In the PHP service you would like to integrate with DropAuth, add the following line to load the DropAuth storage system: `include("../dropauth/storage.php");`
     - Note that both DropAuth and your external service should be placed in directories that share the same parent directory (For example, "/var/www/html/dropauth/" and "var/www/html/myservice/").
-6. To update the data saved to DropAuth, use the following syntax: `dropauth_service_data_update($service_id, $data)`, where `$service_id` is the unique service ID defined previously, and `$data` is the data (generally an array) that you want to store in DropAuth.
+6. To update the data saved to DropAuth, use the following syntax: `dropauth_service_data_update($service_id, $data)`, where `$service_id` is the unique service ID defined previously, and `$data` is the data that you want to store in DropAuth.
+    - The `$data` variable should be an array, where all top level keys are the usernames of users in the DropAuth account database.
 7. To fetch the data saved to DropAuth, use the following syntax: `dropauth_service_data_fetch($service_id)`, where `$service_id` is the unique service ID defined previously.
 
 Below is a complete usage example that simply adds a randomly generated number under a specific user to the data stored in DropAuth. The service name for this example is `testing_service`. In order to try this example, make sure this service ID is registered in DropAuth.
@@ -55,9 +56,9 @@ Below is a complete usage example that simply adds a randomly generated number u
 ```php
 <?php
 $service_id = "testing_service"; // This variable holds the unique service ID as defined in the DropAuth service database.
+$user = "admin"; // This variable holds a username that will be used in this script for demonstration purposes. In production, this value would be replaced with DropAuth authentication to get the username of the user who is currently signed in. The user specified here must be registered with DropAuth, or the service data will refuse to update.
 include("../dropauth/storage.php"); // Load the DropAuth service storage support script.
 
-$user = "testuser"; // This variable holds a random username that will be used in this script for demonstration purposes. In production, this value would be replaced with DropAuth authentication to get the username of the user who is currently signed in.
 
 $service_data = dropauth_service_data_fetch($service_id); // Fetch the current information stored in DropAuth for this service.
 
