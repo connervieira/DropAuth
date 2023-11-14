@@ -38,3 +38,4 @@ November 8th, 2022
 - Added an authentication ID to the session so other programs can identify the source of authentication.
 - Added a configuration system.
 - Moved more logic to `utils.php` to reduce the risk of typos causing unexpected behavior.
+- Added a storage system to allow external services to store information with DropAuth.
