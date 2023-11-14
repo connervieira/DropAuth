@@ -20,8 +20,9 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
     <body>
         <main>
             <?php
-            if (variable_exists($_POST["account_database_location"])) { // Check to see if the configuration form was submitted.
-                $config["databases"]["account"] = $_POST["account_database_location"];
+            if ($_POST["submit"] == "Submit") { // Check to see if the configuration form was submitted.
+                $config["databases"]["account"] = $_POST["databases>account"];
+                $config["databases"]["service"] = $_POST["databases>service"];
 
                 if ($_POST["allow_signups"] == "on") { $config["allow_signups"] = true;
                 } else { $config["allow_signups"] = false; }
@@ -40,9 +41,11 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
                     file_put_contents($config_database_name, serialize($config)); // Save the modified configuration to disk.
                     echo '<div style="text-align:left;"><a class="button" href="./configure.php">Back</a></div>';
                     echo "<p>Successfully updated configuration.</p>";
+                    exit();
                 } else {
                     echo '<div style="text-align:left;"><a class="button" href="./configure.php">Back</a></div>';
                     echo "<p class='error'>The configuration file is not writable.</p>";
+                    exit();
                 }
             } else {
                 echo '
@@ -53,8 +56,12 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
                     <br><hr><br><br>
                     <form method="POST">
 
-                <label for="account_database_location">Database Location: </label><input id="account_database_location" type="text" name="account_database_location" value="' . $config["databases"]["account"] . '"><br><br>';
-                echo ' <label for="admin_users">Admin Users: </label><input id="admin_users" type="text" name="admin_users" value="';
+                <h3>Databases</h3>
+                <label for="databases>account">Account Database Location: </label><input id="databases>account" type="text" name="databases>account" value="' . $config["databases"]["account"] . '"><br><br>
+                <label for="databases>service">Service Database Location: </label><input id="databases>service" type="text" name="databases>service" value="' . $config["databases"]["service"] . '"><br><br>';
+
+                echo '<h3>Authentication</h3>';
+                echo '<label for="admin_users">Admin Users: </label><input id="admin_users" type="text" name="admin_users" value="';
                 $admin_user_list_readable = "";
                 foreach ($config["admin_users"] as $user) { // Iterate through all users in the list of admin users.
                     $admin_user_list_readable = $admin_user_list_readable . $user . ",";
@@ -68,7 +75,7 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
                 if ($config["allow_signups"] == true) { echo " checked"; }
 
                 echo '><br><br>
-                        <input class="button" type="submit">
+                        <input class="button" type="submit" name="submit" id="submit" value="Submit">
                     </form>
                 </main>';
             }
