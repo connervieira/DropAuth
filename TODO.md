@@ -7,7 +7,7 @@ This is an informal to-do list for DropAuth. It is not a comprehensive changelog
         - [X] Add the ability to register services with DropAuth.
         - [X] Add the ability to revoke services with DropAuth.
         - [X] Add the ability to view services that are registered with DropAuth.
-        - [ ] Add the ability to edit existing services without erasing their information.
+        - [X] Add the ability to edit existing services without erasing their information.
     - [X] Allow service to interact with DropAuth.
         - [X] Add the ability for registered services to save information with DropAuth.
         - [X] Add the ability for registered services to read information they have stored in DropAuth.

@@ -39,22 +39,28 @@ if (!in_array($username, $config["admin_users"])) { // Check to see if the curre
                     echo "<p class=\"error\">The Service Name can only contain numbers, letters, underscores, hyphens, and spaces.</p>"; exit();
                 }
 
+
                 // Add the service to the database.
-                $service_database[$service_id] = array();
-                if (strval($_POST["service_name"]) !== "" and isset($_POST["service_name"]) == true) {
-                    $service_database[$_POST["service_id"]]["info"]["name"] = $_POST["service_name"]; // Record the name of this service, as set by the user.
-                } else if (isset($service_database[$_POST["service_id"]]["info"]["name"]) == false or $service_database[$_POST["service_id"]]["info"]["name"] == "") {
-                    $service_database[$_POST["service_id"]]["info"]["name"] = "No Name";
+                if (!isset($service_database[$service_id])) { // Check to see if the data stored by this service doesn't already exist.
+                    $service_database[$service_id] = array();
                 }
-                if (isset($service_database[$_POST["service_id"]]["info"]["registered"]["user"]) == false) { // Only update the user who registered this service if it does not already exist.
-                    $service_database[$_POST["service_id"]]["info"]["registered"]["user"] = $username; // Record the username of the user who registered this service.
+
+                if (strval($service_name) !== "" and isset($service_name) == true) {
+                    $service_database[$service_id]["info"]["name"] = $service_name; // Record the name of this service, as set by the user.
+                } else if (isset($service_database[$service_id]["info"]["name"]) == false or $service_database[$service_id]["info"]["name"] == "") {
+                    $service_database[$service_id]["info"]["name"] = "No Name";
                 }
-                $service_database[$_POST["service_id"]]["info"]["updated"]["user"] = $username; // Record the username of the user who updated this service.
-                if (isset($service_database[$_POST["service_id"]]["info"]["registered"]["time"]) == false) { // Only update the user who registered this service if it does not already exist.
-                    $service_database[$_POST["service_id"]]["info"]["registered"]["time"] = time(); // Record the time that this service was registered.
+                if (isset($service_database[$service_id]["info"]["registered"]["user"]) == false) { // Only update the user who registered this service if it does not already exist.
+                    $service_database[$service_id]["info"]["registered"]["user"] = $username; // Record the username of the user who registered this service.
                 }
-                $service_database[$_POST["service_id"]]["info"]["updated"]["time"] = time(); // Record the time that this service was updated.
-                $service_database[$_POST["service_id"]]["data"]["main"]["active"] = array(); // Add a placeholder where this service will store it's data.
+                $service_database[$service_id]["info"]["updated"]["user"] = $username; // Record the username of the user who updated this service.
+                if (isset($service_database[$service_id]["info"]["registered"]["time"]) == false) { // Only update the user who registered this service if it does not already exist.
+                    $service_database[$service_id]["info"]["registered"]["time"] = time(); // Record the time that this service was registered.
+                }
+                $service_database[$service_id]["info"]["updated"]["time"] = time(); // Record the time that this service was updated.
+                if (!isset($service_database[$service_id]["data"]["main"]["active"])) { // Check to see if the data stored by this service doesn't already exist.
+                    $service_database[$service_id]["data"]["main"]["active"] = array(); // Add a placeholder where this service will store it's data.
+                }
 
                 // Save the updated service database to disk.
                 save_database("service", $service_database);
