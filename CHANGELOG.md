@@ -4,6 +4,8 @@
 
 ### Initial Release
 
+This update provides the bare-minimum functionality required to provide authenication services.
+
 - Core functionality
     - Account creation
     - Account authentication
@@ -12,6 +14,8 @@
 ## Version 2.0
 
 ### Dependability Update
+
+This update makes extensive changes to DropAuth that make it much more dependable, reliable, and secure.
 
 November 8th, 2022
 
@@ -33,9 +37,14 @@ November 8th, 2022
 
 ## Version 3.0
 
+### Integration Update
+
 *Release date to be determined*
 
 - Added an authentication ID to the session so other programs can identify the source of authentication.
-- Added a configuration system.
+- Added a dedicated configuration system.
+    - Administrators can configure DropAuth through a web interface.
+- Re-designed the authentication database.
+    - The authentication database now supports storing more user information in the user's entry in the account database.
 - Moved more logic to `utils.php` to reduce the risk of typos causing unexpected behavior.
 - Added a storage system to allow external services to store information with DropAuth.

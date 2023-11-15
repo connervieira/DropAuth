@@ -19,6 +19,7 @@ include "./config.php";
             <br><hr><br><br>
             <a class="button" href="./signout.php">Sign Out</a>
             <a class="button" href="./changepassword.php">Change Password</a>
+            <a class="button" href="./updateaccountinformation.php">Update Information</a>
 
             <?php
             if (in_array($username, $config["admin_users"])) { // Check to see if the current user is an administrator.
