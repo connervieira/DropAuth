@@ -3,6 +3,41 @@ include (dirname(__FILE__) . "/config.php");
 
 global $config;
 
+
+// This function is called to delete an account from the DropAuth database.
+function delete_account($user_to_delete) {
+    $service_database = load_database("service"); // Load the services database from disk.
+    $account_database = load_database("account"); // Load the account database from disk.
+
+    // Remove this user from any service databases.
+    foreach (array_keys($service_database) as $service_id) { // Iterate through each service in the service database.
+        if (isset($service_database[$service_id][$user_to_delete]) == true) { // Check to see if the user being deleted exists in this service.
+            unset($service_database[$service_id][$user_to_delete]); // Delete this user from this service.
+        }
+    }
+
+    // Remove this use from the account database.
+    unset($account_database[$user_to_delete]);
+
+    // TODO: Add a call to an 'on_account_delete' function to allow custom operations when an account is deleted.
+
+    if (save_database("service", $service_database)) { // Attempt to save the service database, and only continue if it is successful.
+        if (save_database("account", $account_database)) { // Attempt to save the account database, and only continue if it is successful.
+            session_start(); // Start the PHP session
+            session_unset(); // Remove all session variables.
+            session_destroy(); // Destroy the session.
+            echo "<p class='success'>Successfully deleted user.</p>";
+        } else {
+            echo "<p class='error'>Failed to delete user. Unable to update account database file.</p>";
+        }
+    } else {
+        echo "<p class='error'>Failed to delete user. Unable to update service database file.</p>";
+    }
+}
+
+
+
+// This function simply checks that a variable exists and isn't set to a blank value.
 function variable_exists($variable_to_check) {
     if ($variable_to_check !== null and $variable_to_check !== "") {
         return true;
@@ -11,6 +46,7 @@ function variable_exists($variable_to_check) {
     }  
 }
 
+// This function loads a database from the configuration.
 function load_database($database_name) {
     global $config;
     $database_to_load = $config["databases"][$database_name];
@@ -28,14 +64,22 @@ function load_database($database_name) {
     }
 }
 
+// This function saves information to a database from the configuration.
 function save_database($database_name, $save_data) {
     global $config;
     $save_path = $config["databases"][$database_name];
-    file_put_contents($save_path, serialize($save_data)); // Save the database to the disk.
+    if (is_writable($save_path)) { // Check to see if the save path is writable.
+        file_put_contents($save_path, serialize($save_data)); // Save the database to the disk.
+        return true;
+    } else {
+        echo "<p class='error'>The '" . $database_name . "' database is not writable.</p>"
+        return false;
+    }
 }
 
 
 
+// This function attempts to get the client IP through various methods.
 function get_client_ip() {
     if (getenv('HTTP_CLIENT_IP')) {
         $ipaddress = getenv('HTTP_CLIENT_IP');
@@ -56,6 +100,7 @@ function get_client_ip() {
     return $ipaddress;
 }
 
+// This function attempts to get the platform the client is running.
 function get_client_platform() {
     $u_agent = $_SERVER['HTTP_USER_AGENT'];
 
@@ -77,6 +122,7 @@ function get_client_platform() {
     return $platform;
 }
 
+// This function attempts to get the browser used by the client.
 function get_client_browser() {
     $u_agent = $_SERVER['HTTP_USER_AGENT'];
     if (preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) {
