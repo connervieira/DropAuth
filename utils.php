@@ -4,6 +4,20 @@ include (dirname(__FILE__) . "/config.php");
 global $config;
 
 
+
+
+
+function on_account_delete($user_to_delete) {
+    // If you have manually integrated DropAuth with external services, you can use this function to delete information from your associated services.
+    // Here you can load external databases, remove information, and update statistics.
+    // If this function returns 'true', the account deletion will continue. If this function returns 'false' account deletion will halt.
+    return true;
+}
+
+
+
+
+
 // This function is called to delete an account from the DropAuth database.
 function delete_account($user_to_delete) {
     $service_database = load_database("service"); // Load the services database from disk.
@@ -19,19 +33,22 @@ function delete_account($user_to_delete) {
     // Remove this use from the account database.
     unset($account_database[$user_to_delete]);
 
-    // TODO: Add a call to an 'on_account_delete' function to allow custom operations when an account is deleted.
-
-    if (save_database("service", $service_database)) { // Attempt to save the service database, and only continue if it is successful.
-        if (save_database("account", $account_database)) { // Attempt to save the account database, and only continue if it is successful.
-            session_start(); // Start the PHP session
-            session_unset(); // Remove all session variables.
-            session_destroy(); // Destroy the session.
-            echo "<p class='success'>Successfully deleted user.</p>";
+    if (on_account_delete($user_to_delete)) {
+        if (save_database("service", $service_database)) { // Attempt to save the service database, and only continue if it is successful.
+            if (save_database("account", $account_database)) { // Attempt to save the account database, and only continue if it is successful.
+                //echo "<p class='success'>Successfully deleted user.</p>";
+                return true;
+            } else {
+                echo "<p class='error'>Failed to delete user. Unable to update account database file.</p>";
+                return false;
+            }
         } else {
-            echo "<p class='error'>Failed to delete user. Unable to update account database file.</p>";
+            echo "<p class='error'>Failed to delete user. Unable to update service database file.</p>";
+            return false;
         }
     } else {
-        echo "<p class='error'>Failed to delete user. Unable to update service database file.</p>";
+        echo "<p class='error'>Failed to delete user. Unable to execute 'on_account_delete()' function.</p>";
+        return false;
     }
 }
 
@@ -72,7 +89,7 @@ function save_database($database_name, $save_data) {
         file_put_contents($save_path, serialize($save_data)); // Save the database to the disk.
         return true;
     } else {
-        echo "<p class='error'>The '" . $database_name . "' database is not writable.</p>"
+        echo "<p class='error'>The '" . $database_name . "' database is not writable.</p>";
         return false;
     }
 }

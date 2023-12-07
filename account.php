@@ -26,6 +26,7 @@ include "./config.php";
                 echo "<br><br><br>";
                 echo "<a class=\"button\" href=\"./configure.php\">Configure</a> ";
                 echo "<a class=\"button\" href=\"./services.php\">Services</a> ";
+                echo "<a class=\"button\" href=\"./userlist.php\">Users</a> ";
             }
             ?>
         </main>

@@ -48,3 +48,5 @@ November 8th, 2022
     - The authentication database now supports storing more user information in the user's entry in the account database.
 - Moved more logic to `utils.php` to reduce the risk of typos causing unexpected behavior.
 - Added a storage system to allow external services to store information with DropAuth.
+- Admins now have more control over accounts on their instance.
+    - Accounts can be viewed, deleted, and modified by administrators.

@@ -19,6 +19,7 @@ This is an informal to-do list for DropAuth. It is not a comprehensive changelog
     - [X] Validate the usernames and passwords are within the configured length requirements.
 - [ ] Add more advanced account management.
     - [X] Allow admins to disable new account creation.
-    - [ ] Allow admins to delete accounts.
+    - [X] Allow admins to list all accounts.
+    - [X] Allow admins to delete accounts.
     - [ ] Allow admins to change the password of accounts.
 - [ ] Update the 'last seen' time when a user logs in.

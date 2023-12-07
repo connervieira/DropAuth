@@ -11,9 +11,7 @@ a {
     text-decoration: underline;
 }
 
-i {
-    color: #bbbbbb;
-}
+i { color: #bbbbbb; }
 
 
 .box {
@@ -35,10 +33,7 @@ i {
     border-radius: 5px;
 }
 
-.error {
-    color: #ff6666;
-}
+.error { color: #ff6666; }
+.success { color: #66ff66; }
 
-.success {
-    color: #66ff66;
-}
+pre, .navbar { text-align: left; }
