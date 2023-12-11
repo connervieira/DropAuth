@@ -32,6 +32,11 @@ include "./utils.php";
                         $_SESSION['authid'] = "dropauth"; // Set the source of authentication in in the PHP session.
                         $_SESSION['loggedin'] = 1; // Set the type of account signed in in the PHP session.
                         $_SESSION['username'] = $username; // Set the current username in the PHP session.
+
+                        $account_database[$username]["diagnostic"]["ip"]["latest"] = get_client_ip();
+                        $account_database[$username]["diagnostic"]["client"]["platform"]["latest"] = get_client_platform();
+                        $account_database[$username]["diagnostic"]["client"]["browser"]["latest"] = get_client_browser();
+                        save_database("account", $account_database); // Save the database to disk using the function defined in utils.php.
                         echo "<p class='success'>You've successfully signed into your " . htmlspecialchars($config["branding"]["name"]) . " account!</p>
                         <br>
                         <a class='button' href='./account.php'>Continue To Account</a>";

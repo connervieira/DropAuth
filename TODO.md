@@ -17,9 +17,8 @@ This is an informal to-do list for DropAuth. It is not a comprehensive changelog
         - [X] Add a configuration handling script.
         - [X] Add file based configuration saving.
     - [X] Validate the usernames and passwords are within the configured length requirements.
-- [ ] Add more advanced account management.
+- [X] Add more advanced account management.
     - [X] Allow admins to disable new account creation.
     - [X] Allow admins to list all accounts.
     - [X] Allow admins to delete accounts.
-    - [ ] Allow admins to change the password of accounts.
-- [ ] Update the 'last seen' time when a user logs in.
+- [X] Update the 'last seen' time when a user logs in.

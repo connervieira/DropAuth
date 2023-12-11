@@ -46,6 +46,7 @@ November 8th, 2022
     - Administrators can configure DropAuth through a web interface.
 - Re-designed the authentication database.
     - The authentication database now supports storing more user information in the user's entry in the account database.
+    - Various pieces of metadata are stored from both the initial sign-up, as well as the latest sign-in.
 - Moved more logic to `utils.php` to reduce the risk of typos causing unexpected behavior.
 - Added a storage system to allow external services to store information with DropAuth.
 - Admins now have more control over accounts on their instance.
