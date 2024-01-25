@@ -51,3 +51,4 @@ November 8th, 2022
 - Added a storage system to allow external services to store information with DropAuth.
 - Admins now have more control over accounts on their instance.
     - Accounts can be viewed, deleted, and modified by administrators.
+- Added auto-redirects to send the user back to the page they were originally on after logging in with DropAuth.
