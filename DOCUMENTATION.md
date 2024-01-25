@@ -28,6 +28,10 @@ To implement DropAuth into your web service, simply follow these steps.
     - If a page is accessible to everyone, but you still want to load account information, set `$force_login_redirect` to `false`.
 2. Users who open pages with the `authentication.php` script will be automatically redirected to the Sign In page if `$force_login_redirect` is set to `true`. However, you can manually redirect users to the following pages to allow them to interact with DropAuth.
     - Sign In: dropauth/signin.php
+        - You can append "?redirect=X" to this URL, where "X" is replaced with a local page, to automatically redirect the user to a certain page after they have signed in.
+            - For example, the URL "https://example.com/dropauth/signin.php?redirect=/roadmap/index.php" will redirect the user to "https://example.com/roadmap/index.php" after they have been authenticated.
+            - The redirect must point to a file that ends in either a directory, a PHP file, or an HTML file. The file/directory must also exist on the server.
+                - DropAuth checks to see if the specified redirect exists, relative to the DropAuth parent directory.
     - Sign Up: dropauth/signup.php
     - Sign Out: dropauth/signout.php
 

@@ -41,6 +41,7 @@ include "./utils.php";
         if ($_SESSION['loggedin'] == 1) { // Check to see if the user is already signed in.
             if ($_SESSION['authid'] == "dropauth") {
                 echo "<p class='error'>You're already signed in to " . htmlspecialchars($config["branding"]["name"]) . " as " . $_SESSION["username"] . "!</p>";
+                echo "<a class=\"button\" href=\"account.php\">Account</a>";
             } else {
                 echo "<p class='error'>It appears that you're already signed into an authentication system on this site, but it conflicts with " . htmlspecialchars($config["branding"]["name"]) . ". Please sign out of any other accounts on this website and try again.</p>";
             }

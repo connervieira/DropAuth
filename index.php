@@ -1,6 +1,11 @@
 <?php
 include "./config.php";
 include "./utils.php";
+include "./authentication.php";
+
+if ($username !== "" and isset($username)) {
+    header("Location: /dropauth/account.php");
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

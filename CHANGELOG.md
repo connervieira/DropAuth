@@ -39,7 +39,7 @@ November 8th, 2022
 
 ### Integration Update
 
-*Release date to be determined*
+January 24th, 2024
 
 - Added an authentication ID to the session so other programs can identify the source of authentication.
 - Added a dedicated configuration system.
@@ -52,3 +52,4 @@ November 8th, 2022
 - Admins now have more control over accounts on their instance.
     - Accounts can be viewed, deleted, and modified by administrators.
 - Added auto-redirects to send the user back to the page they were originally on after logging in with DropAuth.
+- Users who are already logged in are now automatically redirected from the `index.php` page to the `account.php` page.

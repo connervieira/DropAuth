@@ -2,6 +2,8 @@
 $force_login_redirect = true; // If the user isn't signed in, redirect them to the login page.
 include("./authentication.php"); // Load the authentication system.
 include("./config.php"); // Load the authentication system.
+
+exit();
 ?>
 <!DOCTYPE html>
 
@@ -49,12 +51,11 @@ include("./config.php"); // Load the authentication system.
             ?>
                                         
 
-            <a class='button' href='./account.php'>Back</a>";
             <div style="text-align:left;"><a class="button" href="./account.php">Back</a></div>
+            <h1>Update Account Information</h1>
+            <h3>Change your <?php echo htmlspecialchars($config["branding"]["name"]); ?> account information.</h3>
+            <br><hr><br><br>
             <main>
-                <h1>Update Account Information</h1>
-                <h3>Change your <?php echo htmlspecialchars($config["branding"]["name"]); ?> account information.</h3>
-                <br><hr><br><br>
                 <form method="POST">
                     <label for="first_name">First Name: </label><input id="first_name" placeholder="John" name="first_name" type="text"><br><br>
                     <label for="last_name">Last Name: </label><input id="last_name" placeholder="Doe" name="last_name" type="text"><br><br>
